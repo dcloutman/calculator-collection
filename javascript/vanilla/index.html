@@ -1,287 +1,287 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CalcVanilla</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style type="text/css">
-		body {
-			font-family: monospace;
-			font-size: 16px;
-			font-weight: bold;
-			background-color: #191518;
+    <title>CalcVanilla</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        body {
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #191518;
 
-			margin: 0;
-		}
+            margin: 0;
+        }
 
 
-		main {
-			max-width: 800px;
-			margin: 0 auto;
+        main {
+            max-width: 800px;
+            margin: 0 auto;
 
-			background: rgb(53,50,57);
-			background: linear-gradient(165deg, rgba(53,50,57,1) 0%, rgba(134,137,142,1) 81%, rgba(200,203,206,1) 100%); 
-		}
+            background: rgb(53,50,57);
+            background: linear-gradient(165deg, rgba(53,50,57,1) 0%, rgba(134,137,142,1) 81%, rgba(200,203,206,1) 100%); 
+        }
 
-		#calculator {
-			display: grid;
-			grid-template-columns: repeat(4, 1fr);
-			grid-template-rows: repeat(6, 1fr);
-			grid-column-gap: 0px;
-			grid-row-gap: 0px;
-		}
+        #calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+        }
 
-		.calc-display {
-		}
+        .calc-display {
+        }
 
-		.calc-equals {
-			grid-area: 6 / 3 / 7 / 5;
-		}
-		
-		#display {
-			grid-area: 1 / 1 / 2 / 5;
-			background-color: #ADBFB0;
-			margin: 0 0 .5em 0;
-			border: none;
+        .calc-equals {
+            grid-area: 6 / 3 / 7 / 5;
+        }
+        
+        #display {
+            grid-area: 1 / 1 / 2 / 5;
+            background-color: #ADBFB0;
+            margin: 0 0 .5em 0;
+            border: none;
 
-			font-family: monospace;
-			font-size: 2em;
-			text-shadow: 0 0 2px #fff9;
-			text-align: right;
-			padding: .5em .25em;
-			box-shadow: inset 0px 0px 4px 1px rgba(0,0,0,0.25);
-		}
+            font-family: monospace;
+            font-size: 2em;
+            text-shadow: 0 0 2px #fff9;
+            text-align: right;
+            padding: .5em .25em;
+            box-shadow: inset 0px 0px 4px 1px rgba(0,0,0,0.25);
+        }
 
-		#display:focus {
-			outline: none;
-		}
+        #display:focus {
+            outline: none;
+        }
 
-		#display:hover {
-			cursor: pointer;
-		}
+        #display:hover {
+            cursor: pointer;
+        }
 
-		.calc-button {
-			font-family: monospace;
-			font-size: 1.8em;
-			font-weight: bolder;
-			background-color: #191317;
-			color: #F3F3F1;
-			border-radius: 1em;
-			border: none;
-			margin: .25em;
-			background: rgb(60,57,64);
-			background: linear-gradient(0deg, rgba(46, 43, 51) 8%, rgba(21,18,25,1) 54%, rgba(26,24,29,1) 90%);
-			box-shadow: -1px -5px 3px 1px #00000011;
-		}
+        .calc-button {
+            font-family: monospace;
+            font-size: 1.8em;
+            font-weight: bolder;
+            background-color: #191317;
+            color: #F3F3F1;
+            border-radius: 1em;
+            border: none;
+            margin: .25em;
+            background: rgb(60,57,64);
+            background: linear-gradient(0deg, rgba(46, 43, 51) 8%, rgba(21,18,25,1) 54%, rgba(26,24,29,1) 90%);
+            box-shadow: -1px -5px 3px 1px #00000011;
+        }
 
-		.calc-button:hover {
-			box-shadow: 0px 5px 3px 1px #99999999;
-		}
+        .calc-button:hover {
+            box-shadow: 0px 5px 3px 1px #99999999;
+        }
 
-		.calc-button:active {
-			background: linear-gradient(180deg, rgba(46, 43, 51) 8%, rgba(21,18,25,1) 54%, rgba(26,24,29,1) 90%);			
-		}
+        .calc-button:active {
+            background: linear-gradient(180deg, rgba(46, 43, 51) 8%, rgba(21,18,25,1) 54%, rgba(26,24,29,1) 90%);           
+        }
 
-	</style>
+    </style>
 </head>
 <body>
 <main>
-	<form id="calculator">
-		<input type="text" class="calc-display" id="display" readonly="readonly" class="full-row">
+    <form id="calculator">
+        <input type="text" class="calc-display" id="display" readonly="readonly" class="full-row">
 
-		<button type="button" class="calc-button calc-number" data-press-val="7">7</button>
-		<button type="button" class="calc-button calc-number" data-press-val="8">8</button>
-		<button type="button" class="calc-button calc-number" data-press-val="9">9</button>
-		<button type="button" class="calc-button calc-operator" data-press-val="/">&#247;</button>
+        <button type="button" class="calc-button calc-number" data-press-val="7">7</button>
+        <button type="button" class="calc-button calc-number" data-press-val="8">8</button>
+        <button type="button" class="calc-button calc-number" data-press-val="9">9</button>
+        <button type="button" class="calc-button calc-operator" data-press-val="/">&#247;</button>
 
-		<button type="button" class="calc-button calc-number" data-press-val="4">4</button>
-		<button type="button" class="calc-button calc-number" data-press-val="5">5</button>
-		<button type="button" class="calc-button calc-number" data-press-val="6">6</button>
-		<button type="button" class="calc-button calc-operator" data-press-val="*">*</button>
+        <button type="button" class="calc-button calc-number" data-press-val="4">4</button>
+        <button type="button" class="calc-button calc-number" data-press-val="5">5</button>
+        <button type="button" class="calc-button calc-number" data-press-val="6">6</button>
+        <button type="button" class="calc-button calc-operator" data-press-val="*">*</button>
 
-		<button type="button" class="calc-button calc-number" data-press-val="1">1</button>
-		<button type="button" class="calc-button calc-number" data-press-val="2">2</button>
-		<button type="button" class="calc-button calc-number" data-press-val="3">3</button>
-		<button type="button" class="calc-button calc-operator" data-press-val="-">&#8722;</button>
+        <button type="button" class="calc-button calc-number" data-press-val="1">1</button>
+        <button type="button" class="calc-button calc-number" data-press-val="2">2</button>
+        <button type="button" class="calc-button calc-number" data-press-val="3">3</button>
+        <button type="button" class="calc-button calc-operator" data-press-val="-">&#8722;</button>
 
-		<button type="button" class="calc-button calc-plus-minus" id="plusMinus" data-press-val="+-">&plusmn;</button>
-		<button type="button" class="calc-button calc-number" data-press-val="0">0</button>
-		<button type="button" class="calc-button calc-decimal" data-press-val="." id="calcDecimal" data-press-val="">.</button>
-		<button type="button" class="calc-button calc-operator" data-press-val="+">+</button>
+        <button type="button" class="calc-button calc-plus-minus" id="plusMinus" data-press-val="+-">&plusmn;</button>
+        <button type="button" class="calc-button calc-number" data-press-val="0">0</button>
+        <button type="button" class="calc-button calc-decimal" data-press-val="." id="calcDecimal" data-press-val="">.</button>
+        <button type="button" class="calc-button calc-operator" data-press-val="+">+</button>
 
 
-		<button type="button" class="calc-button calc-control" id="clearEntry" data-press-val="CE">CE</button>
-		<button type="button" class="calc-button calc-control" id="clearAll" data-press-val="AC">AC</button>
-		<button type="button" class="calc-button calc-equals" id="equals" data-press-val="=">=</button>
-	</form>
+        <button type="button" class="calc-button calc-control" id="clearEntry" data-press-val="CE">CE</button>
+        <button type="button" class="calc-button calc-control" id="clearAll" data-press-val="AC">AC</button>
+        <button type="button" class="calc-button calc-equals" id="equals" data-press-val="=">=</button>
+    </form>
 </main>
 <script>
 
-	let ans = null;
-	let entry = 0;
-	let operation = null;
-	let inErrorMode = false
-	let clearDisplayOnNextDigit = false;
-	let userHasChangedEntry = false;
+    let ans = null;
+    let entry = 0;
+    let operation = null;
+    let inErrorMode = false
+    let clearDisplayOnNextDigit = false;
+    let userHasChangedEntry = false;
 
-	const calculator = document.getElementById('calculator');
-	const display = document.getElementById('display');
-	const clearAllButton = document.getElementById('clearAll');
-	const clearEntryButton = document.getElementById('clearEntry');
-	const plusMinusButton = document.getElementById('plusMinus');
+    const calculator = document.getElementById('calculator');
+    const display = document.getElementById('display');
+    const clearAllButton = document.getElementById('clearAll');
+    const clearEntryButton = document.getElementById('clearEntry');
+    const plusMinusButton = document.getElementById('plusMinus');
 
-	function clearEntry (keepError = true) {
-		if (!inErrorMode || !keepError) {
-			display.value = 0;
-			entry = 0;
-		}
-	}
+    function clearEntry (keepError = true) {
+        if (!inErrorMode || !keepError) {
+            display.value = 0;
+            entry = 0;
+        }
+    }
 
-	function clearAll () {
-		ans = null;
-		operation = null;
-		clearEntry(false);
-		userHasChangedEntry = false;
-		inErrorMode = false;
-	}
+    function clearAll () {
+        ans = null;
+        operation = null;
+        clearEntry(false);
+        userHasChangedEntry = false;
+        inErrorMode = false;
+    }
 
-	function calculate() {
-		// If no number was entered before the operator, assume none.
-		if (ans === null) {
-			ans = 0;
-		}
+    function calculate() {
+        // If no number was entered before the operator, assume none.
+        if (ans === null) {
+            ans = 0;
+        }
 
-		entry = Number(display.value);
+        entry = Number(display.value);
 
-		if (inErrorMode) {
-			display.value = 'ERR';
-		} else if (operation !== null) {
-			if (operation == '+') {
-				ans = ans + entry;
-				display.value = String(ans);
-			} else if (operation == '-') {
-				ans = ans - entry;
-				display.value = String(ans);
-			} else if (operation == '*') {
-				ans = ans * entry;
-				display.value = String(ans);
-			} else if (operation == '/') {
-				if (Number(display.value) == 0) {
-					inErrorMode = true;
-					display.value = 'ERR';
-				} else {
-					display.value = String(ans / entry);
-				}
+        if (inErrorMode) {
+            display.value = 'ERR';
+        } else if (operation !== null) {
+            if (operation == '+') {
+                ans = ans + entry;
+                display.value = String(ans);
+            } else if (operation == '-') {
+                ans = ans - entry;
+                display.value = String(ans);
+            } else if (operation == '*') {
+                ans = ans * entry;
+                display.value = String(ans);
+            } else if (operation == '/') {
+                if (Number(display.value) == 0) {
+                    inErrorMode = true;
+                    display.value = 'ERR';
+                } else {
+                    display.value = String(ans / entry);
+                }
 
-			} else {
-				throw "Bad operator exception";
-			}
-			userHasChangedEntry = false;
-		}
+            } else {
+                throw "Bad operator exception";
+            }
+            userHasChangedEntry = false;
+        }
 
-	}
+    }
 
-	function handleNumberClick (event) {
-		event.stopPropagation();
-		//console.log(event.target.dataset.pressVal);
-		if (display.value === '0' || clearDisplayOnNextDigit) {
-			display.value = '';
-		}
+    function handleNumberClick (event) {
+        event.stopPropagation();
+        //console.log(event.target.dataset.pressVal);
+        if (display.value === '0' || clearDisplayOnNextDigit) {
+            display.value = '';
+        }
 
-		if (clearDisplayOnNextDigit) {
-			clearDisplayOnNextDigit = false;
-		}
+        if (clearDisplayOnNextDigit) {
+            clearDisplayOnNextDigit = false;
+        }
 
-		display.value = display.value + event.target.dataset.pressVal;
-		userHasChangedEntry = true;
-	}
+        display.value = display.value + event.target.dataset.pressVal;
+        userHasChangedEntry = true;
+    }
 
-	function handleDecimalClick (event) {
-		event.stopPropagation();
-		//console.log(event.target.dataset.pressVal);
-		if (display.value.search(/\./) === -1) {
-			if (clearDisplayOnNextDigit) {
-				display.value = '0';
-			}
-			display.value = display.value + '.';
-			userHasChangedEntry = true;
-			clearDisplayOnNextDigit = false;
-		}
-	}
+    function handleDecimalClick (event) {
+        event.stopPropagation();
+        //console.log(event.target.dataset.pressVal);
+        if (display.value.search(/\./) === -1) {
+            if (clearDisplayOnNextDigit) {
+                display.value = '0';
+            }
+            display.value = display.value + '.';
+            userHasChangedEntry = true;
+            clearDisplayOnNextDigit = false;
+        }
+    }
 
-	function handleOperatorClick (event) {
-		event.stopPropagation();
-		//console.log(event.target.dataset.pressVal);
-		clearDisplayOnNextDigit = true;
-		if (ans === null) {
-			ans = Number(display.value);
-		} else if (operation != null && userHasChangedEntry) {
-			calculate();
-			userHasChangedEntry = false;
-		}
-		operation = event.target.dataset.pressVal;
-	}
+    function handleOperatorClick (event) {
+        event.stopPropagation();
+        //console.log(event.target.dataset.pressVal);
+        clearDisplayOnNextDigit = true;
+        if (ans === null) {
+            ans = Number(display.value);
+        } else if (operation != null && userHasChangedEntry) {
+            calculate();
+            userHasChangedEntry = false;
+        }
+        operation = event.target.dataset.pressVal;
+    }
 
-	function handleEqualsClick (event) {
-		event.stopPropagation();
-		//console.log(event.target.dataset.pressVal);
-		calculate();
-		ans = null;
-		operator = null;
-		userHasChangedEntry = false;
-		clearDisplayOnNextDigit = true;
-	}
+    function handleEqualsClick (event) {
+        event.stopPropagation();
+        //console.log(event.target.dataset.pressVal);
+        calculate();
+        ans = null;
+        operator = null;
+        userHasChangedEntry = false;
+        clearDisplayOnNextDigit = true;
+    }
 
-	function handleClearEntryClick (event) {
-		event.stopPropagation();
-		console.log("Clear Entry");
-		clearEntry();
-		display.value = '0';
-	}
+    function handleClearEntryClick (event) {
+        event.stopPropagation();
+        console.log("Clear Entry");
+        clearEntry();
+        display.value = '0';
+    }
 
-	function handleClearAllClick (event) {
-		event.stopPropagation();
-		clearAll();
-		display.value = '0';
-	}
+    function handleClearAllClick (event) {
+        event.stopPropagation();
+        clearAll();
+        display.value = '0';
+    }
 
-	function handlePlusMinusClick (event) {
-		event.stopPropagation();
-		// Make a positive a negative and a negative a positive.
-		display.value = String(Number(display.value) * -1);
-	}
+    function handlePlusMinusClick (event) {
+        event.stopPropagation();
+        // Make a positive a negative and a negative a positive.
+        display.value = String(Number(display.value) * -1);
+    }
 
-	// Runs when DOM has completely rendered.
-	window.addEventListener("DOMContentLoaded", function (e) {
-		display.value = "0";
-		// Override calculator form submission.
-		calculator.addEventListener("submit", function (e) {
-			event.preventDefault();
-			return false;
-		});
+    // Runs when DOM has completely rendered.
+    window.addEventListener("DOMContentLoaded", function (e) {
+        display.value = "0";
+        // Override calculator form submission.
+        calculator.addEventListener("submit", function (e) {
+            event.preventDefault();
+            return false;
+        });
 
-		// Register click handler for number buttons.
-		for (numberButton of document.querySelectorAll('.calc-number')) {
-			numberButton.addEventListener('click', handleNumberClick);
-		}
+        // Register click handler for number buttons.
+        for (numberButton of document.querySelectorAll('.calc-number')) {
+            numberButton.addEventListener('click', handleNumberClick);
+        }
 
-		// Register click hanlder for decimal button.
-		document.getElementById('calcDecimal').addEventListener('click', handleDecimalClick);
+        // Register click hanlder for decimal button.
+        document.getElementById('calcDecimal').addEventListener('click', handleDecimalClick);
 
-		// Register click handler for operator buttons.
-		for (operatorButton of document.querySelectorAll('.calc-operator')) {
-			operatorButton.addEventListener('click', handleOperatorClick);
-		}
+        // Register click handler for operator buttons.
+        for (operatorButton of document.querySelectorAll('.calc-operator')) {
+            operatorButton.addEventListener('click', handleOperatorClick);
+        }
 
-		// Register event handler for equals sign.
-		document.getElementById('equals').addEventListener('click', handleEqualsClick);
+        // Register event handler for equals sign.
+        document.getElementById('equals').addEventListener('click', handleEqualsClick);
 
-		// Register event that handles plus-minus botton.
-		plusMinus.addEventListener('click', handlePlusMinusClick);
+        // Register event that handles plus-minus botton.
+        plusMinus.addEventListener('click', handlePlusMinusClick);
 
-		// Register click handlers for clear and clear all buttons.
-		clearEntryButton.addEventListener('click', handleClearEntryClick);
-		clearAllButton.addEventListener('click', handleClearAllClick);
-	});
+        // Register click handlers for clear and clear all buttons.
+        clearEntryButton.addEventListener('click', handleClearEntryClick);
+        clearAllButton.addEventListener('click', handleClearAllClick);
+    });
 </script>
 </body>
 </html>
