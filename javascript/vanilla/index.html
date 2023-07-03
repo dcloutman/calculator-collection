@@ -30,14 +30,11 @@
             grid-row-gap: 0px;
         }
 
-        .calc-display {
-        }
-
         .calc-equals {
             grid-area: 6 / 3 / 7 / 5;
         }
         
-        #display {
+        .calc-display {
             grid-area: 1 / 1 / 2 / 5;
             background-color: #ADBFB0;
             margin: 0 0 .5em 0;
@@ -51,11 +48,11 @@
             box-shadow: inset 0px 0px 4px 1px rgba(0,0,0,0.25);
         }
 
-        #display:focus {
+        .calc-display:focus {
             outline: none;
         }
 
-        #display:hover {
+        .calc-display:hover {
             cursor: pointer;
         }
 
@@ -96,7 +93,7 @@
         <button type="button" class="calc-button calc-number" data-press-val="4">4</button>
         <button type="button" class="calc-button calc-number" data-press-val="5">5</button>
         <button type="button" class="calc-button calc-number" data-press-val="6">6</button>
-        <button type="button" class="calc-button calc-operator" data-press-val="*">*</button>
+        <button type="button" class="calc-button calc-operator" data-press-val="*">&#215;</button>
 
         <button type="button" class="calc-button calc-number" data-press-val="1">1</button>
         <button type="button" class="calc-button calc-number" data-press-val="2">2</button>
