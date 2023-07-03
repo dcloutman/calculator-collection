@@ -1,0 +1,16 @@
+body {
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #191518;
+
+    margin: 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+
+    background: rgb(53, 50, 57);
+    background: linear-gradient(165deg, rgba(53, 50, 57, 1) 0%, rgba(134, 137, 142, 1) 81%, rgba(200, 203, 206, 1) 100%);
+}
