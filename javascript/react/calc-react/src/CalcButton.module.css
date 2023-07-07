@@ -19,3 +19,7 @@
 .calcButton:active {
     background: linear-gradient(180deg, rgba(46, 43, 51) 8%, rgba(21, 18, 25, 1) 54%, rgba(26, 24, 29, 1) 90%);
 }
+
+.equalsButton {
+    grid-area: 6 / 3 / 7 / 5;
+}
