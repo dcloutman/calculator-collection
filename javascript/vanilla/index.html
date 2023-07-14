@@ -37,6 +37,7 @@
         .calc-display {
             grid-area: 1 / 1 / 2 / 5;
             background-color: #ADBFB0;
+            background: linear-gradient(165deg, rgba(180,193,179,.8) 0%, rgba(221,239,227,.8) 45%, rgba(240,253,241,.8) 100%);S
             margin: 0 0 .5em 0;
             border: none;
 
@@ -223,7 +224,7 @@
         //console.log(event.target.dataset.pressVal);
         calculate();
         ans = null;
-        operator = null;
+        operation = null;
         userHasChangedEntry = false;
         clearDisplayOnNextDigit = true;
     }
