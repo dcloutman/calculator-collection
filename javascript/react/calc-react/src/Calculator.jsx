@@ -68,7 +68,7 @@ class Calculator extends React.Component {
 
         if (this.answer === null) {
             this.answer = Number(this.state.displayValue);
-        } else if (operation !== null && this.userHasChangedEntry) {
+        } else if (this.operation !== null && this.userHasChangedEntry) {
             //operation = event.target.dataset.pressValue;
             console.log("Doing calculation after operator press.");
             this.setState({displayValue: String(this.calculate())});
@@ -107,7 +107,7 @@ class Calculator extends React.Component {
     handlePlusMinusClick = (event) => {
         event.stopPropagation();
         // Make a positive a negative and a negative a positive.
-        this.setState({displayValue: String(Number(displayValue) * -1)});
+        this.setState({displayValue: String(Number(this.state.displayValue) * -1)});
     }
 
     clearEntry = (keepError = true) => {
