@@ -1,104 +1,123 @@
-import { useState } from 'react';
+import { useState, React } from 'react';
 import './App.css';
 import Display from './Display';
 import CalcButton from './CalcButton';
 import NumButton from './NumButton';
 import EqualsButton from './EqualsButton';
 
-function App() {
-    const [displayValue, setDisplayValue] = useState("0");
+class Calculator extends React.Component {
 
-    let ans = null,
-        entry = 0,
-        operation = null,
-        inErrorMode = false,
-        clearDisplayOnNextDigit = false,
-        userHasChangedEntry = false,
-        nextDisplayValue = displayValue;
+    constructor (props) {
+        super(props);
+        this.state = {
+            displayValue: 0
+        };
+        this.answer = null;
+        this.entry = 0;
+        this.operation = null;
+        this.inErrorMode = false;
+        this.clearDisplayOnNextDigit = false;
+        this.userHasChangedEntry = false;
+        this.nextDisplayValue = this.state.displayValue;
 
+        this.handleNumericClick.bind(this);
+        this.handleDecimalClick.bind(this);
+        this.handleOperationClick.bind(this);
+        this.handleEqualsClick.bind(this);
+        this.handleClearEntryClick.bind(this);
+        this.handleClearAllClick.bind(this);
+        this.handlePlusMinusClick.bind(this);
+    }
 
-    function handleNumericClick (event) {
+    handleNumericClick (event) {
         event.stopPropagation();
-        nextDisplayValue = displayValue;
-        if (nextDisplayValue === "0" || clearDisplayOnNextDigit) {
+        let nextDisplayValue = this.state.displayValue;
+        if (nextDisplayValue === "0" || this.clearDisplayOnNextDigit) {
             nextDisplayValue = '';
         }
 
-        if (clearDisplayOnNextDigit) {
-            clearDisplayOnNextDigit = false;
-        }
+        clearDisplayOnNextDigit = false;
 
         nextDisplayValue = nextDisplayValue + event.target.dataset.pressValue
-        userHasChangedEntry = true;
+        this.userHasChangedEntry = true;
+        console.log("Op on num Click: " + this.operation);
         setDisplayValue(nextDisplayValue);
     }
     
-    function handleDecimalClick (event) {
+    handleDecimalClick (event) {
         event.stopPropagation();
-        nextDisplayValue = displayValue;
+        let nextDisplayValue = this.displayValue;
         //console.log(event.target.dataset.pressVal);
         if (nextDisplayValue.search(/\./) === -1) {
-            if (clearDisplayOnNextDigit) {
+            if (this.clearDisplayOnNextDigit) {
                 nextDisplayValue = '0';
             }
             nextDisplayValue = nextDisplayValue + '.';
-            userHasChangedEntry = true;
-            clearDisplayOnNextDigit = false;
+            this.userHasChangedEntry = true;
+            this.clearDisplayOnNextDigit = false;
         }
 
+        this.setState({displayValue: nextDisplayValue});
+    }
+
+    handleOperationClick (event) {
+        event.stopPropagation();
+        let workingAnswer = answer;
+        
+        this.clearDisplayOnNextDigit = true;
+
+        if (workingAnswer === null) {
+            workingAnswer = Number(this.state.displayValue);
+        } else if (this.operation !== null && this.userHasChangedEntry) {
+            //operation = event.target.dataset.pressValue;
+            console.log("Doing calculation after operator press.");
+            this.calculate();
+            this.userHasChangedEntry = false;
+        }
+        console.log(`Operation event: ${event.target.dataset.pressValue}`);
+        this.operation = event.target.dataset.pressValue;
+        console.log(`With Operation: ${ans} ${operation} ${entry}`);
+    }
+
+    handleEqualsClick (event) {
+        event.stopPropagation();
+        console.log(`Pre-calculate: ${ans} ${operation} ${entry}`);
+        this.calculate();
         setDisplayValue(nextDisplayValue);
-    }
 
-    function handleOperatorClick (event) {
-        event.stopPropagation();
-        //console.log(event.target.dataset.pressVal);
-        clearDisplayOnNextDigit = true;
-        if (ans === null) {
-            ans = Number(displayValue);
-        } else if (operation != null && userHasChangedEntry) {
-            calculate();
-            userHasChangedEntry = false;
-        }
-        operation = event.target.dataset.pressValue;
-        console.log(operation);
-    }
-
-    function handleEqualsClick (event) {
-        event.stopPropagation();
-        calculate();
         ans = null;
         operation = null;
         userHasChangedEntry = false;
         clearDisplayOnNextDigit = true;
     }
 
-    function handleClearEntryClick (event) {
+    handleClearEntryClick (event) {
         event.stopPropagation();
         console.log("Clear Entry");
         clearEntry();
         setDisplayValue("0");
     }
 
-    function handleClearAllClick (event) {
+    handleClearAllClick (event) {
         event.stopPropagation();
         clearAll();
         setDisplayValue('0');
     }
 
-    function handlePlusMinusClick (event) {
+    handlePlusMinusClick (event) {
         event.stopPropagation();
         // Make a positive a negative and a negative a positive.
         setDisplayValue(String(Number(displayValue) * -1));
     }
 
-    function clearEntry (keepError = true) {
+    clearEntry (keepError = true) {
         if (!inErrorMode || !keepError) {
             setDisplayValue("0");
             entry = 0;
         }
     }
 
-    function clearAll () {
+    clearAll () {
         ans = null;
         operation = null;
         clearEntry(false);
@@ -106,71 +125,78 @@ function App() {
         inErrorMode = false;
     }
 
-    function calculate() {
-        // If no number was entered before the operator, assume none.
-        if (ans === null) {
-            ans = 0;
+    calculate() {
+        // If no number was entered before the operation, assume none.
+        if (this.answer === null) {
+            this.answer = 0;
         }
+
+        console.log(`To calculate: ${this.answer} ${this.operation} ${this.entry}`);
         nextDisplayValue = displayValue;
-        entry = Number(nextDisplayValue);
+        this.entry = Number(nextDisplayValue);
 
         if (inErrorMode) {
             nextDisplayValue = 'ERR';
-        } else if (operation !== null) {
-            if (operation == '+') {
-                ans = ans + entry;
-                nextDisplayValue = String(ans);
-            } else if (operation == '-') {
-                ans = ans - entry;
-                nextDisplayValue = String(ans);
-            } else if (operation == '*') {
-                ans = ans * entry;
-                nextDisplayValue = String(ans);
-            } else if (operation == '/') {
-                if (Number(displayValue) == 0) {
-                    inErrorMode = true;
+        } else if (this.operation !== null) {
+            console.log(`${this.answer} ${this.operation} ${this.entry}`);
+            if (this.operation == '+') {
+                this.answer = this.answer + this.entry;
+                nextDisplayValue = String(this.answer);
+            } else if (this.operation == '-') {
+                this.answer = this.answer - this.entry;
+                nextDisplayValue = String(this.answer);
+            } else if (this.operation == '*') {
+                this.answer = this.answer * this.entry;
+                nextDisplayValue = String(this.answer);
+            } else if (this.operation == '/') {
+                if (Number(this.state.displayValue) == 0) {
+                    this.inErrorMode = true;
                     nextDisplayValue = 'ERR';
                 } else {
-                    nextDisplayValue = String(ans / entry);
+                    this.answer = this.answer / this.entry;
+                    nextDisplayValue = String(this.answer);
                 }
             } else {
-                throw "Bad operator exception";
+                throw "Bad operation exception";
             }
-            userHasChangedEntry = false;
+            this.userHasChangedEntry = false;
+        } else {
+            console.log(`Null operation: ${this.operation}`);
         }
-        console.log(nextDisplayValue);
-        setDisplayValue(nextDisplayValue);
+        console.log("Answer: " + nextDisplayValue);
     }
 
-    return (
-        <form id="calculator">
-            <Display displayValue={displayValue} />
+    render() {
+        return (
+            <form id="calculator">
+                <Display displayValue={this.state.displayValue} />
 
-            <NumButton pressValue={7} displayValue={"7"} clickHandler={handleNumericClick} />
-            <NumButton pressValue={8} displayValue={"8"} clickHandler={handleNumericClick} />
-            <NumButton pressValue={9} displayValue={"9"} clickHandler={handleNumericClick} />
-            <CalcButton pressValue={"/"} displayValue={String.fromCharCode(247)} clickHandler={handleOperatorClick} />
+                <NumButton pressValue={7} displayValue={"7"} clickHandler={handleNumericClick} />
+                <NumButton pressValue={8} displayValue={"8"} clickHandler={handleNumericClick} />
+                <NumButton pressValue={9} displayValue={"9"} clickHandler={handleNumericClick} />
+                <CalcButton pressValue={"/"} displayValue={String.fromCharCode(247)} clickHandler={handleOperationClick} />
 
-            <NumButton pressValue={4} displayValue={"4"} clickHandler={handleNumericClick} />
-            <NumButton pressValue={5} displayValue={"5"} clickHandler={handleNumericClick} />
-            <NumButton pressValue={6} displayValue={"6"} clickHandler={handleNumericClick} />
-            <CalcButton pressValue={"*"} displayValue={String.fromCharCode(215)} clickHandler={handleOperatorClick} />
+                <NumButton pressValue={4} displayValue={"4"} clickHandler={handleNumericClick} />
+                <NumButton pressValue={5} displayValue={"5"} clickHandler={handleNumericClick} />
+                <NumButton pressValue={6} displayValue={"6"} clickHandler={handleNumericClick} />
+                <CalcButton pressValue={"*"} displayValue={String.fromCharCode(215)} clickHandler={handleOperationClick} />
 
-            <NumButton pressValue={1} displayValue={"1"} clickHandler={handleNumericClick} />
-            <NumButton pressValue={2} displayValue={"2"} clickHandler={handleNumericClick} />
-            <NumButton pressValue={3} displayValue={"3"} clickHandler={handleNumericClick} />
-            <CalcButton pressValue={"-"} displayValue={'-'} clickHandler={handleOperatorClick} />
+                <NumButton pressValue={1} displayValue={"1"} clickHandler={handleNumericClick} />
+                <NumButton pressValue={2} displayValue={"2"} clickHandler={handleNumericClick} />
+                <NumButton pressValue={3} displayValue={"3"} clickHandler={handleNumericClick} />
+                <CalcButton pressValue={"-"} displayValue={'-'} clickHandler={handleOperationClick} />
 
-            <CalcButton pressValue={"+/"} displayValue={String.fromCharCode(177)} clickHandler={handlePlusMinusClick} />
-            <NumButton pressValue={0} displayValue={"0"} clickHandler={handleNumericClick} />
-            <CalcButton pressValue={"."} displayValue={"."} />
-            <CalcButton pressValue={"+"} displayValue={"+"} clickHandler={handleOperatorClick} />
+                <CalcButton pressValue={"+/"} displayValue={String.fromCharCode(177)} clickHandler={handlePlusMinusClick} />
+                <NumButton pressValue={0} displayValue={"0"} clickHandler={handleNumericClick} />
+                <CalcButton pressValue={"."} displayValue={"."} clickHandler={handleDecimalClick} />
+                <CalcButton pressValue={"+"} displayValue={"+"} clickHandler={handleOperationClick} />
 
-            <CalcButton pressValue={"CE"} displayValue={"CE"} clickHandler={handleClearEntryClick} />
-            <CalcButton pressValue={"AC"} displayValue={"AC"} clickHandler={handleClearAllClick} />
-            <EqualsButton pressValue={"="} displayValue={"="} clickHandler={handleEqualsClick} />
-        </form>
-    );
+                <CalcButton pressValue={"CE"} displayValue={"CE"} clickHandler={handleClearEntryClick} />
+                <CalcButton pressValue={"AC"} displayValue={"AC"} clickHandler={handleClearAllClick} />
+                <EqualsButton pressValue={"="} displayValue={"="} clickHandler={handleEqualsClick} />
+            </form>
+        );
+    }
 }
 
 export default App;
