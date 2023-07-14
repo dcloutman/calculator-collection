@@ -19,14 +19,6 @@ class Calculator extends React.Component {
         this.inErrorMode = false;
         this.clearDisplayOnNextDigit = false;
         this.userHasChangedEntry = false;
-
-        //this.handleNumericClick.bind(this);
-        //this.handleDecimalClick.bind(this);
-        //this.handleOperationClick.bind(this);
-        //this.handleEqualsClick.bind(this);
-        //this.handleClearEntryClick.bind(this);
-        //this.handleClearAllClick.bind(this);
-        //this.handlePlusMinusClick.bind(this);
     }
 
     handleNumericClick = (event) => {
@@ -40,14 +32,13 @@ class Calculator extends React.Component {
 
         nextDisplayValue = nextDisplayValue + event.target.dataset.pressValue
         this.userHasChangedEntry = true;
-        console.log("Op on num Click: " + this.operation);
         this.setState({displayValue: nextDisplayValue});
     }
     
     handleDecimalClick = (event) => {
         event.stopPropagation();
         let nextDisplayValue = this.state.displayValue;
-        //console.log(event.target.dataset.pressVal);
+
         if (nextDisplayValue.search(/\./) === -1) {
             if (this.clearDisplayOnNextDigit) {
                 nextDisplayValue = '0';
@@ -62,27 +53,21 @@ class Calculator extends React.Component {
 
     handleOperationClick = (event) => {
         event.stopPropagation();
-        //let workingAnswer = this.answer;
         
         this.clearDisplayOnNextDigit = true;
 
         if (this.answer === null) {
             this.answer = Number(this.state.displayValue);
         } else if (this.operation !== null && this.userHasChangedEntry) {
-            //operation = event.target.dataset.pressValue;
-            console.log("Doing calculation after operator press.");
             this.setState({displayValue: String(this.calculate())});
             this.userHasChangedEntry = false;
         }
-        console.log(`Operation event: ${event.target.dataset.pressValue}`);
         this.operation = event.target.dataset.pressValue;
-        console.log(`With Operation: ${this.answer} ${this.operation} ${this.entry}`);
     }
 
     handleEqualsClick = (event) => {
         event.stopPropagation();
         
-        console.log(`Pre-calculate: ${this.answer} ${this.operation} ${this.entry}`);
         this.setState({displayValue: String(this.calculate())});
 
         this.answer = null;
@@ -93,7 +78,6 @@ class Calculator extends React.Component {
 
     handleClearEntryClick = (event) => {
         event.stopPropagation();
-        console.log("Clear Entry");
         this.clearEntry();
         this.setState({displayValue: "0"});
     }
@@ -131,14 +115,12 @@ class Calculator extends React.Component {
             this.answer = 0;
         }
 
-        console.log(`To calculate: ${this.answer} ${this.operation} ${this.entry}`);
         let nextDisplayValue = this.state.displayValue;
         this.entry = Number(nextDisplayValue);
 
         if (this.inErrorMode) {
             nextDisplayValue = 'ERR';
         } else if (this.operation !== null) {
-            console.log(`${this.answer} ${this.operation} ${this.entry}`);
             if (this.operation == '+') {
                 this.answer = this.answer + this.entry;
                 nextDisplayValue = String(this.answer);
@@ -160,10 +142,7 @@ class Calculator extends React.Component {
                 throw "Bad operation exception";
             }
             this.userHasChangedEntry = false;
-        } else {
-            console.log(`Null operation: ${operation}`);
         }
-        console.log("Answer: " + nextDisplayValue);
         return nextDisplayValue;
     }
 
